@@ -16,26 +16,31 @@
   #<p><a href="/?led=off"><button class="button button2">OFF</button></a></p></body></html>"""
   #return html
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('192.168.10.19', 100))
-s.listen(5)
+
+import uselect
+import time
+import usocket
+
+READ_ONLY = uselect.POLLIN
+READ_WRITE = READ_ONLY | uselect.POLLOUT
+
+
+websok = usocket.socket(usocket.AF_INET, usocket.SOCK_STREAM)
+websok.bind(('192.168.0.20', 100))
+websok.listen(5)
+webpol = uselect.poll() # creates uselect.poll class under the name webpol
+webpol.register(websok, READ_ONLY)
 
 while True:
-  conn, addr = s.accept()
-  print('Got a connection from %s' % str(addr))
-  request = conn.recv(1024)
-  request = str(request)
-  print('Content = %s' % request)
-  #led_on = request.find('/?led=on')
-  #led_off = request.find('/?led=off')
-  #if led_on == 6:
-  #  print('LED ON')
-  #  led.value(1)
-  #if led_off == 6:
-  #  print('LED OFF')
-  #  led.value(0)
-  #response = web_page()
-  #conn.send(response)
-  conn.close()
 
-
+    print("waiting for the next event")
+    events = webpol.ipoll(10000, 0)
+    for event in events:  
+      print(event)
+      conn, addr = websok.accept()
+      print('Got a connection from %s' % str(addr))
+      request = conn.recv(1024)
+      request = str(request)
+      print('Content = %s' % request)
+      time.sleep_us(5000)
+      conn.close()
