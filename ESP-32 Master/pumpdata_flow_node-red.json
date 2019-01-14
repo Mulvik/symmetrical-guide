@@ -1,0 +1,504 @@
+[
+    {
+        "id": "7a28527f.5827ac",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "66a4c29f.c1de54",
+        "type": "mqtt in",
+        "z": "7a28527f.5827ac",
+        "name": "Test topic",
+        "topic": "test",
+        "qos": "0",
+        "broker": "7d21df4a.2080c8",
+        "x": 410,
+        "y": 220,
+        "wires": [
+            [
+                "8f098ba4.8e5b9"
+            ]
+        ]
+    },
+    {
+        "id": "ab6fe9aa.eb57b8",
+        "type": "debug",
+        "z": "7a28527f.5827ac",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 680,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "8f098ba4.8e5b9",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "Test function",
+        "func": "var str = msg.payload;\nvar th = str.slice(2,-2).split(\"', '\");\nmsg.payload = {\nsensor_id: th[0],\nman: th[1],\nserial_num: th[2],\nman_date: th[3],\ninst_date: th[4],\npump_cycle: parseInt(th[5]),\npump_time: parseInt(th[6]),\ndays_pumped: parseInt(th[7]),\nalm_activs: parseInt(th[8]),\nalarm_time: parseInt(th[9]),\nrelay_on: parseInt(th[10]),\ntotal_time: parseInt(th[11]),\nswitch_conf: parseInt(th[12]),\nwater_level: parseInt(th[13]),\nis_alarmed: parseInt(th[14]),\nis_pumping: parseInt(th[15])\n    \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 420,
+        "wires": [
+            [
+                "4e628d2d.f4f8e4",
+                "7d4e880b.fba82",
+                "80bf6e95.566a8",
+                "53655401.5a666c",
+                "d8b0b702.212288",
+                "90947c27.3ea6",
+                "32928b5.19bf474",
+                "1ea08f7f.cf30b1",
+                "da9a6daa.52315",
+                "ab6fe9aa.eb57b8",
+                "e487e447.f9acf8",
+                "f663d3.78748c3",
+                "a8589fa3.35b35",
+                "b91f5736.221818"
+            ]
+        ]
+    },
+    {
+        "id": "4e628d2d.f4f8e4",
+        "type": "ui_gauge",
+        "z": "7a28527f.5827ac",
+        "name": "Water_level",
+        "group": "89a5dd98.ef0918",
+        "order": 1,
+        "width": "8",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Water Level",
+        "label": "mm",
+        "format": "{{msg.payload.water_level}}",
+        "min": 0,
+        "max": "16",
+        "colors": [
+            "#0000b5",
+            "#ff8000",
+            "#ff0000"
+        ],
+        "seg1": "5",
+        "seg2": "9",
+        "x": 840,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "9d60a7b9.1fcc58",
+        "type": "ui_switch",
+        "z": "7a28527f.5827ac",
+        "name": "",
+        "label": "Relay active:",
+        "tooltip": "",
+        "group": "89a5dd98.ef0918",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "fa-power-off fa-2x",
+        "oncolor": "#008000",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "fa-power-off fa-2x",
+        "offcolor": "#ff0000",
+        "x": 860,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7d4e880b.fba82",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Serial Number: ",
+        "format": "{{msg.payload.serial_num}}",
+        "layout": "row-spread",
+        "x": 870,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "80bf6e95.566a8",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Manufacture Date: ",
+        "format": "{{msg.payload.man_date}}",
+        "layout": "row-spread",
+        "x": 900,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "53655401.5a666c",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Install date: ",
+        "format": "{{msg.payload.inst_date}}",
+        "layout": "row-spread",
+        "x": 880,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "d02f7136.0c781",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "89a5dd98.ef0918",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Pump configured for: ",
+        "format": "{{msg.payload}} Power",
+        "layout": "row-spread",
+        "x": 910,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "d8b0b702.212288",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "",
+        "func": "var str = msg.payload.relay_on;\nvar parsed = Boolean(str);\nmsg.payload = parsed;\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 800,
+        "wires": [
+            [
+                "9d60a7b9.1fcc58"
+            ]
+        ]
+    },
+    {
+        "id": "f1cd5a03.6352b8",
+        "type": "debug",
+        "z": "7a28527f.5827ac",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1100,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "f9199860.abea88",
+        "type": "ui_switch",
+        "z": "7a28527f.5827ac",
+        "name": "",
+        "label": "Pump state:",
+        "tooltip": "",
+        "group": "89a5dd98.ef0918",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "fa-power-off fa-2x ",
+        "oncolor": "#008000",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "fa-power-off fa-2x",
+        "offcolor": "#ff0000",
+        "x": 840,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "501b112.093aaf",
+        "type": "ui_switch",
+        "z": "7a28527f.5827ac",
+        "name": "",
+        "label": "Alarm state: ",
+        "tooltip": "",
+        "group": "89a5dd98.ef0918",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "fa-exclamation-triangle fa-2x",
+        "oncolor": "#ff0000",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "fa-check fa-2x",
+        "offcolor": "#808080",
+        "x": 860,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "32928b5.19bf474",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "pumping?",
+        "func": "var str = msg.payload.is_pumping;\nvar parsed = Boolean(str);\nmsg.payload = parsed;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 960,
+        "wires": [
+            [
+                "f9199860.abea88"
+            ]
+        ]
+    },
+    {
+        "id": "90947c27.3ea6",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "alarmed?",
+        "func": "var str = msg.payload.is_alarmed;\nvar parsed = Boolean(str);\nmsg.payload = parsed;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1080,
+        "wires": [
+            [
+                "501b112.093aaf"
+            ]
+        ]
+    },
+    {
+        "id": "be7fc8d8.7868d8",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Total power on time:",
+        "format": "1 day {{msg.payload}}",
+        "layout": "row-spread",
+        "x": 990,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "202e706f.73c74",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Total pump running time:",
+        "format": "{{msg.payload}} ",
+        "layout": "row-spread",
+        "x": 1190,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b2d91899.a531d8",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Alarm time",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1190,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "1ea08f7f.cf30b1",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "",
+        "func": "var tt = msg.payload.total_time;\nvar date = new Date(null);\ndate.setSeconds(tt); // specify value for SECONDS here\nvar result = date.toISOString().substr(11, 8);\nmsg.payload = result;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 740,
+        "y": 340,
+        "wires": [
+            [
+                "be7fc8d8.7868d8"
+            ]
+        ]
+    },
+    {
+        "id": "da9a6daa.52315",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "pump time",
+        "func": "var pt = msg.payload.pump_time;\nvar pt_date = new Date(null);\npt_date.setSeconds(pt); // specify value for SECONDS here\nvar result = pt_date.toISOString().substr(11, 8);\nmsg.payload = result;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860,
+        "y": 420,
+        "wires": [
+            [
+                "202e706f.73c74"
+            ]
+        ]
+    },
+    {
+        "id": "e487e447.f9acf8",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "alarm time",
+        "func": "var at = msg.payload.alarm_time;\nvar al_date = new Date(null);\nal_date.setSeconds(at); // specify value for SECONDS here\nvar result = al_date.toISOString().substr(11, 8);\nmsg.payload = result;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860,
+        "y": 480,
+        "wires": [
+            [
+                "b2d91899.a531d8"
+            ]
+        ]
+    },
+    {
+        "id": "f663d3.78748c3",
+        "type": "function",
+        "z": "7a28527f.5827ac",
+        "name": "switch setting decode",
+        "func": "var settings = msg.payload.switch_conf;\nvar selection = [\"Low\", \"Medium High\", \"Medium Low\", \"High\"];\nmsg.payload = selection[settings];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 880,
+        "wires": [
+            [
+                "d02f7136.0c781",
+                "f1cd5a03.6352b8"
+            ]
+        ]
+    },
+    {
+        "id": "b91f5736.221818",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Pump has cycled:",
+        "format": "{{msg.payload.pump_cycle}} times",
+        "layout": "row-spread",
+        "x": 920,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "a8589fa3.35b35",
+        "type": "ui_text",
+        "z": "7a28527f.5827ac",
+        "group": "d973c081.9787c",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Alarm state triggered:",
+        "format": "{{msg.payload.alm_activs}} times",
+        "layout": "row-spread",
+        "x": 930,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "7d21df4a.2080c8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "Test topic",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "89a5dd98.ef0918",
+        "type": "ui_group",
+        "z": "",
+        "name": "Live Data",
+        "tab": "e6dd6f0d.faa878",
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "d973c081.9787c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pump Info",
+        "tab": "e6dd6f0d.faa878",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e6dd6f0d.faa878",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Pump 1",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
